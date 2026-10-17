@@ -1,8 +1,50 @@
-version: '3.8'
 services:
   rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
+    image: rabbitmq:4-management-alpine
     ports:
-      - "5672:5672"   # puerto para las apps
-      - "15672:15672" # UI web http://localhost:15672 (user: guest / pass: guest)
+      - "${RABBIT_PORT:-5672}:5672"
+      - "${RABBIT_UI_PORT:-15672}:15672"   # panel web, usuario y clave guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  ws-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.ws
+    ports:
+      - "${WS_PORT:-9000}:9000"   # pantalla del operador
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  processor:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    command: ["python", "alert_processor.py"]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      WS_BRIDGE_URL: http://ws-server:9000/alert
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      ws-server:
+        condition: service_healthy
+    restart: unless-stopped
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    command: ["python", "sensor_producer.py"]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped

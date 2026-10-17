@@ -1,0 +1,8 @@
+# Imagen del productor y del procesador; el comando se elige en docker-compose.yml.
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY conexion.py sensores.py alertas.py sensor_producer.py alert_processor.py ./
+USER nobody
+ENV PYTHONUNBUFFERED=1
