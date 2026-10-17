@@ -24,9 +24,9 @@ function agregar(alerta) {
   li.className = alerta.nivel;
   const texto = document.createElement("span");
   texto.className = "texto";
-  texto.textContent = `${alerta.alerta}: ${alerta.mensaje}`;
+  texto.textContent = alerta.mensaje;
   const detalle = document.createElement("small");
-  detalle.textContent = `${nombresNivel[alerta.nivel]} · ${hora(alerta.timestamp)}`;
+  detalle.textContent = `${alerta.alerta} · ${hora(alerta.timestamp)}`;
   li.append(texto, detalle);
   $("alertas").prepend(li);
   while ($("alertas").children.length > MAXIMO) $("alertas").lastChild.remove();
