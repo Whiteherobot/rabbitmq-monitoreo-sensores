@@ -2,11 +2,10 @@
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
-const bodyParser = require("body-parser");
 const os = require("os");
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });

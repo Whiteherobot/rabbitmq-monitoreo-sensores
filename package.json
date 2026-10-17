@@ -1,27 +1,16 @@
 {
-  "name": "mecanismosdecomunicacion",
+  "name": "rabbitmq-monitoreo-sensores",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Whiteherobot/MecanismosDeComunicacion.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "description": "Servidor WebSocket que difunde las alertas de los sensores a los operadores",
+  "main": "ws_server.js",
   "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Whiteherobot/MecanismosDeComunicacion/issues"
+  "scripts": {
+    "start": "node ws_server.js",
+    "test": "node --test"
   },
-  "homepage": "https://github.com/Whiteherobot/MecanismosDeComunicacion#readme",
   "dependencies": {
-    "body-parser": "^2.2.0",
     "express": "^5.1.0",
-    "we": "^1.5.10",
     "ws": "^8.18.3"
   }
 }
