@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Monitoreo de sensores</title>
+    <link rel="stylesheet" href="estilos.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Monitoreo de sensores</h1>
+      <span id="conexion" class="conexion">Conectando...</span>
+    </header>
+
+    <section class="contadores" aria-label="Alertas recibidas por nivel">
+      <div class="contador rojo"><strong id="n-rojo">0</strong><span>Críticas</span></div>
+      <div class="contador amarillo"><strong id="n-amarillo">0</strong><span>Advertencias</span></div>
+      <div class="contador verde"><strong id="n-verde">0</strong><span>Normales</span></div>
+    </section>
+
+    <div class="columnas">
+      <section>
+        <h2>Estado de cada sensor</h2>
+        <table>
+          <thead>
+            <tr><th>Sensor</th><th>Ubicación</th><th>Última lectura</th><th>Estado</th></tr>
+          </thead>
+          <tbody id="sensores"></tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Últimas alertas</h2>
+        <label class="filtro"><input type="checkbox" id="solo-importantes" /> Ocultar las normales</label>
+        <ol id="alertas" class="alertas"></ol>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
